@@ -210,15 +210,15 @@ export function chooseInvoice(data = {}) {
     nativeChooseInvoice(data);
     emitter.once('WXChooseInvoiceResp.Resp', (resp) => {
       if (resp.errCode === 0) {
-        if (Platform.OS === 'android') {
-          const cardItemList = JSON.parse(resp.cardItemList);
-          resp.cards = cardItemList
-            ? cardItemList.map((item) => ({
-                cardId: item.card_id,
-                encryptCode: item.encrypt_code,
-              }))
-            : [];
-        }
+        // if (Platform.OS === 'android') {
+        //   const cardItemList = JSON.parse(resp.cardItemList);
+        //   resp.cards = cardItemList
+        //     ? cardItemList.map((item) => ({
+        //         cardId: item.card_id,
+        //         encryptCode: item.encrypt_code,
+        //       }))
+        //     : [];
+        // }
         resolve(resp);
       } else {
         reject(new WechatError(resp));
@@ -475,7 +475,7 @@ export function pay(data) {
 
   // FIXME(94cstyles)
   // Android requires the type of the timeStamp field to be a string
-  if (Platform.OS === 'android') data.timeStamp = String(data.timeStamp);
+  // if (Platform.OS === 'android') data.timeStamp = String(data.timeStamp);
 
   return new Promise((resolve, reject) => {
     WeChat.pay(data, (result) => {
